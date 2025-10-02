@@ -31,4 +31,4 @@ while True:
     print(read_temp())
     time.sleep(1)
 
-learn.adafruit.com/dht-humidity-sensing-on-raspberry-pi-with-gdocs-logging/python-setup
+https://pypi.org/project/w1thermsensor/
