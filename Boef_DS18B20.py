@@ -1,4 +1,11 @@
-from w1thermsensor import W1ThermSensor, Sensor
+import RPi.GPIO as GPIO
+from w1thermsensor import W1ThermSensor
+from time import sleep
 
-sensor = W1ThermSensor(sensor_type=Sensor.DS18B20, sensor_id="00000588806a")
-temperature_in_celsius = sensor.get_temperature()
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(4, GPIO.IN,pull_up_down=GPIO.PUD_UP)
+sensor = W1ThermSensor()
+while True:
+    temperatuur_in_celcius = sensor.get_temperature()
+    print(temperatuur_in_celcius)
+    sleep(1)
