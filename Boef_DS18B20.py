@@ -30,3 +30,5 @@ def read_temp():
 while True:
     print(read_temp())
     time.sleep(1)
+
+learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing/software
