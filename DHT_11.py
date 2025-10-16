@@ -13,3 +13,5 @@ while True:
     except RuntimeError as error:
         print(error.args[0])
     time.sleep(1.0)
+
+    ls -l /sys/bus/w1/devices
