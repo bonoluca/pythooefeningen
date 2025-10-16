@@ -10,4 +10,3 @@ while True:
     print(temperatuur_in_celcius)
     sleep(1)
 
-    https://pypi.org/project/w1thermsensor/
