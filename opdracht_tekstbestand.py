@@ -8,7 +8,8 @@ dhtDevice = adafruit_dht.DHT11(board.D18)
 
 huidig_tijd = strftime()
 
-teller = 0
+teller = 0 
+
 
 
 
