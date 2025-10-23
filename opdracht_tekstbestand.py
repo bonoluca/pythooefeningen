@@ -6,9 +6,10 @@ from time import gmtime , strftime
 
 dhtDevice = adafruit_dht.DHT11(board.D18)
 
-huidig_tijd = strftime()
+huidige_tijd = ("%S",gmtime())
 
 teller = 0 
+
 
 
 
