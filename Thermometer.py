@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
 from w1thermsensor import W1ThermSensor
-from time import sleep
 import time
 import board
 import adafruit_dht
@@ -24,7 +23,7 @@ while True:
         humidity = dhtDevice.humidity
 
         temperatuur_in_celcius = sensor.get_temperature()
-        temperatuur = temperatuur_in_celcius + temperature_c
+        temperatuur = temperatuur_in_celcius + temperature_c / 2
 
         print(temperature_c, humidity)
         print(temperatuur_in_celcius)
@@ -33,6 +32,19 @@ while True:
             leds.value = (1, 0, 0, 0, 0, 0, 0, 0)
             print(temperature_c, humidity)
             print(temperatuur_in_celcius)
+        elif temperatuur >= 10:
+            leds.value = (1, 1, 1 ,0 , 0, 0, 0, 0)
+            print(temperature_c, humidity)
+            print(temperatuur_in_celcius)
+        elif temperatuur >= 20:
+            leds.value = (1, 1, 1 ,1 ,1 , 0, 0, 0)
+            print(temperature_c, humidity)
+            print(temperatuur_in_celcius)
+        elif temperatuur >= 30:
+            leds.value = (1, 1, 1 ,1 ,1 , 1 ,1 , 0)
+            print(temperature_c, humidity)
+            print(temperatuur_in_celcius)
+
         elif temperatuur >= 35:
             leds.value = (1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 )
             print(temperature_c, humidity)
