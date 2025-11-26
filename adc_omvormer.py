@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
 # SPDX-License-Identifier: MIT
-from gpiozero import LED
+from gpiozero import PWMLED
 import board
 import busio
 import digitalio
@@ -19,10 +19,9 @@ mcp = MCP.MCP3008(spi, cs)
 
 # create an analog input channel on pin 0
 chan = AnalogIn(mcp, MCP.P0)
-red = LED(17)
-go = True
-teller = 0
-while go:
+red = PWMLED(17)
+
+while True:
 
     print("Raw ADC Value: ", chan.value)
     print("ADC Voltage: " + str(chan.voltage) + "V")
@@ -32,11 +31,9 @@ while go:
     #zet de ruwe ADC waarde om naar een genoralizeerde waarden tussen 0.0 en 1.0
     brightness = raw_value / 65535
     #stel de helderheid in 
-    LED.value = brightness
+    red.value = brightness
 
-    red.on()
-    teller = teller +1
-    if teller == 20:
-        go = False
+   
+
     time.sleep(1.0)
     
