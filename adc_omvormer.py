@@ -26,6 +26,14 @@ while go:
 
     print("Raw ADC Value: ", chan.value)
     print("ADC Voltage: " + str(chan.voltage) + "V")
+    #lees de potentiometerwaarden uit 
+    raw_value = chan.value
+    voltage = chan.voltage 
+    #zet de ruwe ADC waarde om naar een genoralizeerde waarden tussen 0.0 en 1.0
+    brightness = raw_value / 65535
+    #stel de helderheid in 
+    LED.value = brightness
+
     red.on()
     teller = teller +1
     if teller == 20:
