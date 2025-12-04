@@ -1,18 +1,17 @@
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import time
 from datetime import datetime
 from gpiozero import MCP3008
-import Adafruit_DHT
+import adafruit_dht
 
 # Config
 CSV_BESTAND = "temperatuur_log.csv"
 VREF = 3.3
 TMP36_CHANNEL = 0
 DHT_PIN = 4
-DHT_SENSOR = Adafruit_DHT.DHT11
+DHT_SENSOR =  adafruit_dht.DHT11
 
 # Init
 adc = MCP3008(channel=TMP36_CHANNEL)
@@ -31,7 +30,7 @@ while True:
     tmp36_c = (voltage - 0.500) * 100
 
     # DHT11 uitlezen
-    humidity, dht_c = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
+    humidity, dht_c =  adafruit_dht.read_retry(DHT_SENSOR, DHT_PIN)
 
     verschil = tmp36_c - dht_c if dht_c is not None else None
 
