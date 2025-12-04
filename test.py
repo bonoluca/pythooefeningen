@@ -6,6 +6,11 @@ import time
 from gpiozero import MCP3008, LED
 import adafruit_dht
 import board
+from time import  strftime
+
+f = open("tijdbestand.txt", "w")
+f.write("datum     tijd    dht11(°C)  TMP36(°C)   verschillwaarden(°C)\n")
+f.close()
 
 # --- Config ---
 TMP36_CHANNEL = 0           # TMP36 Vout op CH0 van MCP3008
@@ -21,7 +26,7 @@ rood = LED(5)
 geel = LED(6)
 blauw = LED(13)
 
-print("Start metingen (DHT11 + TMP36). Druk Ctrl+C om te stoppen.")
+
 while True:
     # TMP36 uitlezen -> spanning -> °C
     voltage = adc.value * 3.3               # 0.0..1.0 * 3.3V
@@ -57,5 +62,7 @@ while True:
         geel.off()
         blauw.off()
         print(f"DHT11: NA     | TMP36: {tmp36_c:.1f} °C | Δ: NA")
+        f= open("tijdbestand.txt", "a")
+        f.write(f"")
 
     time.sleep(INTERVAL_SEC)
