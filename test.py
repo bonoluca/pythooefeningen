@@ -1,30 +1,28 @@
 
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
-import time
-from gpiozero import MCP3008, LED
-import adafruit_dht
-import board
-from time import  strftime
+import time # importeer time 
+from gpiozero import MCP3008, LED # importeer mcp3008, LED van gpiozero
+import adafruit_dht  # imopteer adafruit_dht
+import board #imopteer board
+from time import  strftime  #importeer strftime van time
 
-f = open("tijdbestand.txt", "w")
-f.write("datum     tijd    dht11(°C)  TMP36(°C)   verschillwaarden(°C)\n")
-f.close()
+f = open("tijdbestand.txt", "w")  #open scv bestan
+f.write("datum     tijd    dht11(°C)  TMP36(°C)   verschillwaarden(°C)\n") #schrijf dit erin 
+f.close() # close het scv bestand
 
-# --- Config ---
+
 TMP36_CHANNEL = 0           # TMP36 Vout op CH0 van MCP3008
 DHT_PIN = board.D18         # DHT11 op GPIO18 (BCM)
-INTERVAL_SEC = 2.0
+INTERVAL_SEC = 2.0 # maak variabelen voor time
 
-# --- Init hardware ---
+
 adc = MCP3008(channel=TMP36_CHANNEL)   # standaard SPI0 CE0
-dht = adafruit_dht.DHT11(DHT_PIN)
+dht = adafruit_dht.DHT11(DHT_PIN)  #maak variabelen dht als waarden adafruit_dht.DHT11(DHT_PIN)
 
-# LEDs (voorbeeld)
-rood = LED(5)
-geel = LED(6)
-groen = LED(13)
+
+rood = LED(5) #led rood pin 5
+geel = LED(6) #LED GEEL PIN 6
+groen = LED(13)  # LED GROEN PIN 13
 
 
 while True:
@@ -34,8 +32,8 @@ while True:
 
     # DHT11 uitlezen (kan soms RuntimeError geven)
     try:
-        huidige_tijd = strftime (" %H:%M:%S ")
-        dht_c = dht.temperature
+        huidige_tijd = strftime (" %H:%M:%S ")  #maak variabelen huidige tijd aan en zet de waarde strftime (" %H:%M:%S ") er in
+        dht_c = dht.temperature #maak variabelen  dht_c aan en zet waarde  dht.temperature 
         humidity = dht.humidity  # beschikbaar indien je later wil gebruiken
     except RuntimeError:
         dht_c = None
