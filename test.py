@@ -34,6 +34,7 @@ while True:
 
     # DHT11 uitlezen (kan soms RuntimeError geven)
     try:
+        huidige_tijd = strftime (" %H:%M:%S ")
         dht_c = dht.temperature
         humidity = dht.humidity  # beschikbaar indien je later wil gebruiken
     except RuntimeError:
@@ -63,6 +64,6 @@ while True:
         blauw.off()
         print(f"DHT11: NA     | TMP36: {tmp36_c:.1f} °C | Δ: NA")
         f= open("tijdbestand.txt", "a")
-        f.write(f"")
+        f.write(f"{huidige_tijd}  {dht_c:.1f} {tmp36_c:.1f} {verschil:+.1f} ")
 
     time.sleep(INTERVAL_SEC)
