@@ -1,19 +1,27 @@
+
 import time
 import board
 import adafruit_dht
 from gpiozero import RGBLED
 
+# -------------------------------
+# Hardware-configuratie
+# -------------------------------
 
-# DHT11 op BCM pin 18 (fysieke pin 12) via Blinka
-dht = adafruit_dht.DHT11(board.D18)
+# DHT11 op BCM pin 4 (fysieke pin 7) via Blinka
+# (Aanrader i.p.v. GPIO18 om conflicten te vermijden)
+dht = adafruit_dht.DHT11(board.D4)
 
 # RGB LED (pas pinnen aan naar jouw bekabeling)
 # Zet active_high=False als je een common anode RGB LED gebruikt.
-led = RGBLED(red=9, green=10, blue=11)  # bv. RGBLED(9, 10, 11, active_high=False)
+led = RGBLED(red=9, green=10, blue=11)  # bv.: RGBLED(9, 10, 11, active_high=False)
 
 # Algemene helderheid (0..1). Zet lager als je LED te fel is.
 BRIGHTNESS = 1.0
 
+# -------------------------------
+# Kleurenlijst: 0 = rood (40°C) ... 20 = blauw (0°C)
+# -------------------------------
 colors = [
     [255, 0, 0],     # 0  -> 40°C
     [205, 38, 38],   # 1
@@ -38,6 +46,9 @@ colors = [
     [0, 0, 255]      # 20 -> 0°C
 ]
 
+# -------------------------------
+# Hulpfuncties
+# -------------------------------
 
 def pick_color_by_temp_if(temp_c):
     """
@@ -48,11 +59,9 @@ def pick_color_by_temp_if(temp_c):
     Daartussen stappen van 2°C per kleur.
     """
     if temp_c is None:
-        # Geen geldige meting: hou de vorige kleur of kies een veilige waarde
         return None
 
-    # Zones van 2°C, van boven naar beneden.
-    # Je kunt deze grenzen aanpassen als je dat wil (bijv. grotere of kleinere zones).
+    # Zones van 2°C, van hoog naar laag
     if temp_c >= 40:
         return colors[0]
     elif temp_c >= 38:
@@ -98,6 +107,41 @@ def pick_color_by_temp_if(temp_c):
 
 def set_led_rgb255(rgb):
     """
-    Zet een (R,G,B) in 0..255 om naar PWM 0..1 en stuur de led.
+    Zet een (R,G,B) in 0..255 om naar PWM 0..1 en stuur de LED.
     Houdt rekening met BRIGHTNESS factor.
     """
+    if rgb is None:
+        return
+    r, g, b = rgb
+    led.color = (
+        (r / 255.0) * BRIGHTNESS,
+        (g / 255.0) * BRIGHTNESS,
+        (b / 255.0) * BRIGHTNESS
+    )
+
+# -------------------------------
+# Hoofdlus
+# -------------------------------
+
+try:
+    while True:
+        try:
+            T = dht.temperature  # °C
+            print(f"Temperatuur: {T} °C")
+
+            kleur = pick_color_by_temp_if(T)
+            if kleur is not None:
+                set_led_rgb255(kleur)
+            # Bij None laten we de vorige kleur staan
+
+        except RuntimeError as e:
+            # DHT11 geeft soms RuntimeErrors; rustig opnieuw proberen
+            print("DHT error:", e)
+
+        # DHT11 niet te snel lezen; ~1–2s is prima
+        time.sleep(2.0)
+
+except KeyboardInterrupt:
+    pass
+finally:
+    led.off()
