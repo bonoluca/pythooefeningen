@@ -1,0 +1,30 @@
+rpi@raspberrypi:~/Documenten/pythooefeningen $ /bin/python /home/rpi/Documenten/pythooefeningen/copilot.py
+Unable to set line 4 to input
+^CTraceback (most recent call last):
+  File "/home/rpi/Documenten/pythooefeningen/copilot.py", line 128, in <module>
+    T = dht.temperature  # °C
+        ^^^^^^^^^^^^^^^
+  File "/home/rpi/.local/lib/python3.11/site-packages/adafruit_dht.py", line 269, in temperature
+    self.measure()
+  File "/home/rpi/.local/lib/python3.11/site-packages/adafruit_dht.py", line 214, in measure
+    pulses = self._get_pulses_pulseio()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rpi/.local/lib/python3.11/site-packages/adafruit_dht.py", line 143, in _get_pulses_pulseio
+    while self.pulse_in:
+  File "/home/rpi/.local/lib/python3.11/site-packages/adafruit_blinka/microcontroller/bcm283x/pulseio/PulseIn.py", line 174, in __len__
+    message = self._wait_receive_msg()
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rpi/.local/lib/python3.11/site-packages/adafruit_blinka/microcontroller/bcm283x/pulseio/PulseIn.py", line 110, in _wait_receive_msg
+    message = self._mq.receive(block=True, type=type)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sysv_ipc.Error: Signaled while waiting
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/rpi/Documenten/pythooefeningen/copilot.py", line 146, in <module>
+    led.off()
+  File "/usr/lib/python3/dist-packages/gpiozero/output_devices.py", line 991, in off
+    def off(self):
+
+KeyboardInterrupt
