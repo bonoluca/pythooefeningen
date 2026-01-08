@@ -34,6 +34,25 @@ colors = [
 eerste_waarde = colors[0]
 tweede_waarde = colors[1]
 derde_waarde = colors[2]
+vierde_waarde = colors[3]
+vijfde_waarde = colors[4]
+zesde_waarde = colors[5]
+zevende_waarde = colors[6]
+achtste_waarde = colors[7]
+negende_waarde = colors[8]
+tiende_waarde = colors[9]
+elfde_waarde = colors[10]
+twaalfde_waarde = colors[11]
+dertiende_waarde = colors[12]
+veertiende_waarde = colors[13]
+vijftiende_waarde = colors[14]
+zestiende_waarde = colors[15]
+zeventiende_waarde = colors[16]
+achttiende_waarde = colors[17]
+negentiende_waarde = colors[18]
+twintigste_waarde = colors[19]
+eenentwintigste_waarde = colors[20]
+
 
 while True:
     try:
