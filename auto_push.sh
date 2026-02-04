@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Ga naar de map van je Git-repository
-cd /home/pi/weatherheat-python/ICT-projecten || exit
+cd /home/rpi/weatherheat-python/ICT-projecten || exit
 
 # Haal eventuele wijzigingen van GitHub op
 git pull origin main --no-rebase
