@@ -8,7 +8,11 @@ motor = Motor(forward=17, backward=14, pwm = True)  #zet de forward op pin 17 en
 while True: #zolang true is blijf door gaan
     motor.forward(pot.value)  # laat de motor naar voor draaiden gelijk aan pot meter waarde
     print(pot.value)  #print de potentiometer value
-    sleep(0.1)  #een sleep voor 0.1 sec
+    sleep(0.07)  #een sleep voor 0.1 sec
+    motor.backward(pot.value)
+    print(pot.value)  #print de potentiometer value
+    sleep(0.07)  #een sleep voor 0.1 sec
+
 
 
 
