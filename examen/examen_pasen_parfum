@@ -1,0 +1,34 @@
+from gpiozero import AngularServo #importeer de gpiozero library
+from gpiozero import MCP3008 #importeer de mcp3008 library
+from gpiozero import Button
+from time import sleep #importeer sleep
+
+#pot = MCP3008(channel=0) #de pot meter op channel 0 zetten
+#motor = AngularServo (17, min_angle=-90, max_angle=90  )  #zet de forward op pin 17 en backwards op 14 en zet de pwm op true
+
+buttonPlus = Button(20)
+buttonMin = Button(26)
+buttonEnter = Button(21)
+
+
+vraag_welkestand = 0
+def plus1():
+   vraag_welkestand = vraag_welkestand + 1
+def min1():
+   vraag_welkestand = vraag_welkestand -1
+def Enter():
+    print(vraag_welkestand)
+
+buttonPlus.when_pressed = plus1
+ 
+buttonMin.when_pressed = min1
+   
+buttonEnter.when_pressed = Enter
+
+sleep(0.05)  #een sleep voor 0.1 sec
+
+
+#while True: #zolang true is blijf door gaan
+   # motor.angle = vraag_welkestand  # laat de motor naar voor draaiden gelijk aan pot meter waarde
+   # print(vraag_welkestand)  #print de potentiometer value
+   
