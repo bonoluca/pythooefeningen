@@ -1,16 +1,6 @@
-import RPi.GPIO as GPIO
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-
-GPIO.setup(4, GPIO.IN, GPIO.PUD_UP)
-
-GPIO.wait_for_edge(4, GPIO.FALLING):
-print("button was pressed")
-
 from gpiozero import Button
+buttonPlus = Button(20)
 
-btn = Button(4)
-
-btn.wait_for_press()
+buttonPlus.wait_for_press()
+vraag_welkestand = vraag_welkestand + 1
 print("button was pressed")

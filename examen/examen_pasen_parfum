@@ -1,34 +1,63 @@
 from gpiozero import AngularServo #importeer de gpiozero library
 from gpiozero import MCP3008 #importeer de mcp3008 library
 from gpiozero import Button
+import adafruit_dht
+import board
 from time import sleep #importeer sleep
 
-#pot = MCP3008(channel=0) #de pot meter op channel 0 zetten
-#motor = AngularServo (17, min_angle=-90, max_angle=90  )  #zet de forward op pin 17 en backwards op 14 en zet de pwm op true
+servo = AngularServo(17, min_angle = -90, max_angle = 90)  #zet de max en min anghle op 90 en -90 en de pin op 17
+servo_waarde = 0 #maak een teller voor servo waare gelijk aan null
+rest_servowaarde = 0 #maak een teller voor de servo waarde te restten naar null
+
+dhtDevice = adafruit_dht.DHT11(board.D18)
+pot = MCP3008(channel=0) #de pot meter op channel 0 zetten
+motor = AngularServo (17, min_angle=-90, max_angle=90  )  #zet de forward op pin 17 en backwards op 14 en zet de pwm op true
 
 buttonPlus = Button(20)
 buttonMin = Button(26)
 buttonEnter = Button(21)
 
 
+
 vraag_welkestand = 0
-def plus1():
-   vraag_welkestand = vraag_welkestand + 1
-def min1():
-   vraag_welkestand = vraag_welkestand -1
-def Enter():
-    print(vraag_welkestand)
 
-buttonPlus.when_pressed = plus1
- 
-buttonMin.when_pressed = min1
+while True:
+
+    if buttonPlus.is_pressed :vraag_welkestand = vraag_welkestand + 1
+    
+    if buttonMin.is_pressed : vraag_welkestand = vraag_welkestand - 1
+    
+    if buttonEnter.is_pressed : print(vraag_welkestand)
+
+
+    if vraag_welkestand == 1 :
+        waarde_motor = -90
+    if vraag_welkestand == 2 :
+        waarde_motor = -45
+    if vraag_welkestand == 3 :
+        waarde_motor = 0
+    if vraag_welkestand == 4 :
+        waarde_motor = 45
+    if vraag_welkestand == 5:
+        waarde_motor = 90
+
+    
+    sleep(0.05)  #een sleep voor 0.1 sec
+    motor.angle = waarde_motor  # laat de motor naar voor draaiden gelijk aan pot meter waarde
+    print(vraag_welkestand)  #print de potentiometer value
+    try :
+        temperature_c = dhtDevice.temperature #maak een variabelen temperatuur_c aan voor de temp  van dht 
+        if temperature_c < 15:  # als de temp kleiner is dan 15 maak servo waarde gelijk aan reset servowaarde om het dan terug op nul te zetten 
+            servo_waarde = rest_servowaarde
+            servo_waarde = servo_waarde + 0
+            sleep(2) # wacht 2 sec
+    except RuntimeError as error: #als try niet werkt gaat die over naar dit  en print die dat er een fout is 
+        print(error.args[0])
+        sleep(1.0)#wacht 2sec
+    
+
    
-buttonEnter.when_pressed = Enter
-
-sleep(0.05)  #een sleep voor 0.1 sec
 
 
-#while True: #zolang true is blijf door gaan
-   # motor.angle = vraag_welkestand  # laat de motor naar voor draaiden gelijk aan pot meter waarde
-   # print(vraag_welkestand)  #print de potentiometer value
-   
+
+    
