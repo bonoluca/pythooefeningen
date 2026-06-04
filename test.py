@@ -1,32 +1,43 @@
 import time
 import serial
 
-
 if __name__ == '__main__':
     ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
-    ser.reset_input_buffer()
+    time.sleep(2)
+
     while True:
-        temp =40
-        hum = 0
-        ventialtor = 0
         if ser.in_waiting > 0:
             line = ser.readline().decode('utf-8').rstrip()
-            print(line)
-        else:
-            ser.write(b"Hello from Raspberry Pi!\n")
-            line = ser.readline().decode('utf-8').rstrip()
-            print(line)
-            time.sleep(1)
-        if temp <= 30 and hum <= 100:
-            ventialtor = 0
-        elif temp <= 43 or temp >= 30 and hum  
-            ventialtor = 33
-        elif temp <= 51 and hum <= 80:
-            ventialtor = 66
-        elif temp <= 61 and hum >= 20 or hum <= 100:
-            ventialtor = 100
-        
-        print(ventialtor)
+            print("Ontvangen:", line)
 
+            try:
+                temp, hum = map(int, line.split(","))
+            except:
+                continue
 
+            # Logica
+            if temp <= 25:
+                ventilator = 0
 
+            elif temp <= 35:
+                ventilator = 33
+
+            elif temp <= 45:
+                ventilator = 66
+
+            elif temp <= 55:
+                # hier zit jouw probleemzone!
+                if hum <= 40:
+                    ventilator = 66   # oranje
+                else:
+                    ventilator = 100  # rood
+
+            else:
+                ventilator = 100
+
+            print("Ventilator:", ventilator)
+
+            # terugsturen naar Arduino
+            ser.write(f"{ventilator}\n".encode())
+
+        time.sleep(1)
