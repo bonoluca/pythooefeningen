@@ -8,7 +8,7 @@ if __name__ == '__main__':
     while True:
         temp =40
         hum = 0
-        ventialtor = 0
+        ventilator = 0
         if ser.in_waiting > 0:
             line = ser.readline().decode('utf-8').rstrip()
             print(line)
@@ -17,16 +17,21 @@ if __name__ == '__main__':
             line = ser.readline().decode('utf-8').rstrip()
             print(line)
             time.sleep(1)
-        if temp <= 30 and hum <= 100:
-            ventialtor = 0
-        elif temp <= 43 or temp >= 30 and hum  
-            ventialtor = 33
-        elif temp <= 51 and hum <= 80:
-            ventialtor = 66
-        elif temp <= 61 and hum >= 20 or hum <= 100:
-            ventialtor = 100
+       
+        if temp <= 30:
+            ventilator = 0
         
-        print(ventialtor)
+
+        elif temp <= 30 and hum < 70 or temp <= 27 and hum >= 70:
+            ventilator = 100
+        
+        elif temp <= 35 and hum < 60 or temp <= 30 and hum >= 60:
+            ventilator = 100
+        
+        elif temp > 35 or hum > 80:
+            ventilator = 100
+        
+        print(ventilator)
 
 
 
